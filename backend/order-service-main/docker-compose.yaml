@@ -1,0 +1,9 @@
+name: booking-lapangan
+services:
+  order-service:
+    container_name: order-service
+    image:
+    ports:
+      - "8004:8004"
+    env_file:
+      - .env

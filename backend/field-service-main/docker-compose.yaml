@@ -1,0 +1,9 @@
+name: booking-lapangan
+services:
+  field-service:
+    container_name: field-service
+    image:
+    ports:
+      - "8002:8002"
+    env_file:
+      - .env
