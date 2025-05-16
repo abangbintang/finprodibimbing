@@ -2,8 +2,6 @@ package services
 
 import (
 	"context"
-	"github.com/golang-jwt/jwt/v5"
-	"golang.org/x/crypto/bcrypt"
 	"strings"
 	"time"
 	"user-service/config"
@@ -12,6 +10,9 @@ import (
 	"user-service/domain/dto"
 	"user-service/domain/models"
 	"user-service/repositories"
+
+	"github.com/golang-jwt/jwt/v5"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type UserService struct {
@@ -48,7 +49,7 @@ func (u *UserService) Login(ctx context.Context, req *dto.LoginRequest) (*dto.Lo
 
 	expirationTime := time.Now().Add(time.Duration(config.Config.JwtExpirationTime) * time.Minute).Unix()
 	data := &dto.UserResponse{
-		UUID:        user.UUID,
+		UserID:      user.UUID,
 		Name:        user.Name,
 		Username:    user.Username,
 		PhoneNumber: user.PhoneNumber,
@@ -135,7 +136,7 @@ func (u *UserService) Register(ctx context.Context, req *dto.RegisterRequest) (*
 
 	response := &dto.RegisterResponse{
 		User: dto.UserResponse{
-			UUID:        user.UUID,
+			UserID:      user.UUID,
 			Name:        user.Name,
 			Username:    user.Username,
 			PhoneNumber: user.PhoneNumber,
@@ -208,7 +209,7 @@ func (u *UserService) Update(ctx context.Context, request *dto.UpdateRequest, uu
 	}
 
 	data = dto.UserResponse{
-		UUID:        userResult.UUID,
+		UserID:      userResult.UUID,
 		Name:        userResult.Name,
 		Username:    userResult.Username,
 		PhoneNumber: userResult.PhoneNumber,
@@ -225,7 +226,7 @@ func (u *UserService) GetUserLogin(ctx context.Context) (*dto.UserResponse, erro
 	)
 
 	data = dto.UserResponse{
-		UUID:        userLogin.UUID,
+		UserID:      userLogin.UserID,
 		Name:        userLogin.Name,
 		Username:    userLogin.Username,
 		PhoneNumber: userLogin.PhoneNumber,
@@ -243,7 +244,7 @@ func (u *UserService) GetUserByUUID(ctx context.Context, uuid string) (*dto.User
 	}
 
 	data := dto.UserResponse{
-		UUID:        user.UUID,
+		UserID:      user.UUID,
 		Name:        user.Name,
 		Username:    user.Username,
 		PhoneNumber: user.PhoneNumber,
